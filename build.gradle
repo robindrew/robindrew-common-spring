@@ -1,0 +1,73 @@
+
+
+// PLUGINS
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+// ARTIFACT
+version = '1.2.2'
+group = 'com.robindrew.common'
+
+// JAVA VERSION
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+// COMPILATION
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+// SOURCE FILES (What are our source directories)
+sourceSets {
+	main {
+    	java {
+        	srcDir 'src/main/java'
+        	srcDir 'src/tool/java'
+		}
+		resources {
+			srcDir 'src/main/resources'
+		}
+	}
+}
+
+configurations {
+    deployerJars
+}
+
+
+// ECLIPSE (Generating Eclipse project and classpath)
+eclipse {
+    classpath {
+        downloadJavadoc = false
+        downloadSources = true
+    }
+}
+
+
+// REPOSITORIES (Where to read JAR files from or publish them to)
+repositories {
+	mavenLocal()
+    mavenCentral()
+}
+
+// REMOVE DEPENDENCIES
+configurations.implementation {
+    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+}
+
+// DEPENDENCIES (Which JAR files to download and host locally)
+dependencies {
+
+	implementation 'com.google.guava:guava:20.0'
+	implementation 'org.apache.velocity:velocity-engine-core:2.3'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.7.1'
+	implementation 'org.springframework.boot:spring-boot-starter-jetty:2.7.1'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.7.1'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.7.1'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.1'
+
+}
