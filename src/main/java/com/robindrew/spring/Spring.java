@@ -1,4 +1,4 @@
-package com.robindrew.common.spring;
+package com.robindrew.spring;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,7 +16,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.robindrew.common.spring.service.ServiceDefinition;
+import com.robindrew.spring.service.ServiceDefinition;
 
 public class Spring {
 

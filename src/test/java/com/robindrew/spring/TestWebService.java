@@ -1,7 +1,9 @@
-package com.robindrew.common.spring;
+package com.robindrew.spring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.robindrew.spring.AbstractSpringService;
 
 @SpringBootApplication
 public class TestWebService extends AbstractSpringService {

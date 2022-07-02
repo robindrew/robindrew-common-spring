@@ -1,4 +1,4 @@
-package com.robindrew.common.spring.service;
+package com.robindrew.spring.service;
 
 import java.util.Set;
 
