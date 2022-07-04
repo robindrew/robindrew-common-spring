@@ -1,0 +1,30 @@
+
+<html>
+<head>
+<title>Error</title>
+<style>
+body { font-family: arial; }
+</style>
+</head>
+<body>
+#if($errorStatus)
+<h1>HTTP Status: ${errorStatus}</h1>
+#end
+<h3>HTTP Request</h3>
+<pre>
+${request.getMethod()} ${errorUri} ${request.getProtocol()}
+#foreach($entry in $request.getHeaderMap().entrySet())
+${entry.key}: ${entry.value}
+#end
+</pre>
+#if($errorException)
+<h3>Stack Trace</h3>
+<p>
+<pre>
+${errorException}
+</pre>
+</p>
+#end
+</body>
+</html>
+

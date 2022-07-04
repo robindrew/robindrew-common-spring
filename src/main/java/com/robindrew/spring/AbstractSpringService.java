@@ -19,16 +19,12 @@ public abstract class AbstractSpringService {
 	@Autowired
 	private ServiceDefinition service;
 	@Autowired
-	@Qualifier("requestMappingHandlerMapping")
-	private RequestMappingHandlerMapping handlerMapping;
+	private ApplicationContext context;
 	@Autowired
 	private ServletContext servletContext;
 	@Autowired
-	private ApplicationContext context;
-
-	public ServiceDefinition getService() {
-		return service;
-	}
+	@Qualifier("requestMappingHandlerMapping")
+	private RequestMappingHandlerMapping handlerMapping;
 
 	@PostConstruct
 	public void registerContext() {

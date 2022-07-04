@@ -56,6 +56,11 @@ public abstract class AbstractTemplateServlet extends HttpServlet {
 		Stopwatch executeTimer = Stopwatch.createStarted();
 		execute(request, response, dataMap);
 		executeTimer.stop();
+		
+		// Found (Redirect)?
+		if (response.getStatus() == HttpServletResponse.SC_FOUND) {
+			return;
+		}
 
 		// Add meta data to the data map
 		dataMap.put(META_EXECUTE_TIMER, executeTimer);

@@ -1,0 +1,406 @@
+<html>
+
+
+<head>
+<title>${title}</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+<!-- JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" ></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!-- Google Charts -->
+<script>
+google.charts.load('current', {packages: ['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+	drawJavaMemoryPieChart();
+	drawJavaMemoryAreaChart();
+	drawSystemMemoryPieChart();
+	drawSystemMemoryAreaChart();
+}
+
+function drawJavaMemoryPieChart() {
+	var data = google.visualization.arrayToDataTable([
+		['Type', 'MB'],
+		['Used (MB)', ${pieChartJavaMemoryUsed}],
+		['Free (MB)', ${pieChartJavaMemoryFree}]
+	]);
+
+	var options = {
+		title: 'Heap Memory',
+		backgroundColor: { fill:'transparent' },
+		slices: {
+			0: { color: '#c33' },
+			1: { color: '#4a4' }
+		}
+	};
+	
+	var chart = new google.visualization.PieChart(document.getElementById('pieChartJavaMemory'));
+	chart.draw(data, options);
+}
+
+function drawSystemMemoryPieChart() {
+	var data = google.visualization.arrayToDataTable([
+		['Type', 'MB'],
+		['Used (MB)', ${pieChartSystemMemoryUsed}],
+		['Free (MB)', ${pieChartSystemMemoryFree}]
+	]);
+
+	var options = {
+		title: 'System Memory',
+		backgroundColor: { fill:'transparent' },
+		slices: {
+			0: { color: '#c33' },
+			1: { color: '#4a4' }
+		}
+	};
+
+	var chart = new google.visualization.PieChart(document.getElementById('pieChartSystemMemory'));
+	chart.draw(data, options);
+}
+
+function drawJavaMemoryAreaChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['Time', 'Used (MB)', 'Free (MB)'],
+        #foreach($instant in $javaHeapStats)
+        ['${instant.time}', ${instant.used}, ${instant.max}],
+        #end
+	]);
+
+	var options = {
+		title: 'Heap Memory (${javaHeapStats.size()} minutes)',
+		curveType: 'function',
+		isStacked: true,
+		colors:['red','green'],
+		backgroundColor: { fill:'transparent' },
+        legend: { position: 'bottom' }
+	};
+
+	var chart = new google.visualization.AreaChart(document.getElementById('areaChartJavaMemory'));
+	chart.draw(data, options);
+}
+
+function drawSystemMemoryAreaChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['Time', 'Used (MB)', 'Free (MB)'],
+        #foreach($instant in $systemMemoryStats)
+        ['${instant.time}', ${instant.used}, ${instant.max}],
+        #end
+	]);
+
+	var options = {
+		title: 'System Memory (${systemMemoryStats.size()} minutes)',
+		curveType: 'function',
+		isStacked: true,
+		colors:['red','green'],
+		backgroundColor: { fill:'transparent' },
+        legend: { position: 'bottom' }
+	};
+
+	var chart = new google.visualization.AreaChart(document.getElementById('areaChartSystemMemory'));
+	chart.draw(data, options);
+}
+</script>
+
+<style>
+body {
+	padding-top: 10px;
+}
+.top-spacer {
+	padding-top: 10px;
+}
+.pointer {
+	cursor: pointer;
+}
+</style>
+
+
+</head>
+
+
+<body>
+
+<!-- START CONTAINER -->
+<div class="container">
+
+
+<!-- NAV BAR -->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<div class="navbar-header">
+<a class="navbar-brand" href="/">${serviceName} #${serviceInstance}</a>
+</div>
+<ul class="nav navbar-nav">
+<li class="active"><a href="/System">System</a></li>
+</ul>
+#if($serviceHomeLink)
+<ul class="nav navbar-nav navbar-right">
+<li><a href="${serviceHomeLink}"><span class="glyphicon glyphicon-chevron-up"></span></a></li>
+</ul>
+#end
+</div><!-- /.container-fluid -->
+</nav>
+<!-- NAV BAR -->
+
+<!-- START ROW -->
+<div class="row">
+
+<!-- TITLE -->
+<div class="col-md-12">
+<h3>System</h3>
+<p>This page gives details about the <b>Operating System</b> and the current <b>Java Process</b>.</p>
+</div>
+
+
+<!-- JAVA PROCESS -->
+<div class="col-md-6">
+<div class="panel panel-info">
+<div class="panel-heading">Java Process</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr><th>Java Version</th><td>${javaVersion}</td></tr>
+<tr><th>Process Id</th><td>${processId}</td></tr>
+<tr><th>Main Class</th><td>${javaMainClass}</td></tr>
+<tr><th>Working Directory</th><td>${javaWorkingDirectory}</td></tr>
+<tr><th>File Encoding</th><td>${javaFileEncoding}</td></tr>
+<tr><th>Timezone</th><td>${javaTimezone}</td></tr>
+<tr><th>Start Time</th><td>${javaStartTime} ${javaTimezone}</td></tr>
+<tr><th>Uptime</th><td>${javaUptime}</td></tr>
+</table>
+</div>
+</div>
+
+
+<!-- OPERATING SYSTEM -->
+<div class="col-md-6">
+<div class="panel panel-warning">
+<div class="panel-heading">Operating System</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr><th>Name</th><td>${operatingSystem}</td></tr>
+<tr><th>System Time</th><td>${systemTime} ${javaTimezone}</td></tr>
+<tr><th>Host Name</th><td>${systemHost}</td></tr>
+<tr><th>Host Address</th><td>${systemAddress}</td></tr>
+</table>
+</div>
+</div>
+
+
+<!-- TABS -->
+<div class="col-md-12">
+<ul class="nav nav-pills">
+<li role="presentation" class="active pointer"><a id="Memory_Tab">Memory</a></li>
+<li role="presentation" class="pointer"><a id="Network_Tab">Network</a></li>
+<li role="presentation" class="pointer"><a id="Properties_Tab">Properties</a></li>
+<li role="presentation" class="pointer"><a id="Thread_Tab">Threads</a></li>
+<li role="presentation" class="pointer"><a id="FileSystem_Tab">File System</a></li>
+</ul>
+<br/>
+</div>
+
+
+<!-- MEMORY -->
+<div class="col-md-12 Memory_Content">
+<div class="panel panel-success">
+<div class="panel-heading">Memory</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>&nbsp;</th>
+<th>Percent</th>
+<th>Used</th>
+<th>Limit</th>
+</tr>
+<tr>
+<th>System</th>
+<td>${systemPercentMemory}</td>
+<td>${systemUsedMemory}</td>
+<td>${systemMaxMemory}</td>
+</tr>
+<tr>
+<th>Heap</th>
+<td>${javaPercentHeapMemory}</td>
+<td>${javaUsedHeapMemory}</td>
+<td>${javaMaxHeapMemory}</td>
+</tr>
+<tr>
+<th>Direct</th>
+<td>${javaPercentDirectMemory}</td>
+<td>${javaUsedDirectMemory}</td>
+<td>${javaMaxDirectMemory}</td>
+</tr>
+<tr>
+<td colspan="4">
+<div class="col-md-6"><div id="pieChartJavaMemory" style="width: 600px; height: 250px;"></div></div>
+<div class="col-md-6"><div id="pieChartSystemMemory" style="width: 600px; height: 250px;"></div></div>
+<div class="col-md-6"><div id="areaChartJavaMemory" style="width: 600px; height: 250px;"></div></div>
+<div class="col-md-6"><div id="areaChartSystemMemory" style="width: 600px; height: 250px;"></div></div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+
+<!-- NETWORK -->
+<div class="col-md-12 Network_Content">
+<div class="panel panel-info">
+<div class="panel-heading">Network Interfaces</div>
+<table class="table small table-hover table-striped table-bordered">
+#foreach($network in $networks)
+<tr>
+<th>${network.name}</th>
+<th>${network.displayName}</th>
+<td>
+#foreach($address in $network.addressList)
+${address}<br/>
+#end
+</td>
+</tr>
+#end
+</table>
+</div>
+</div>
+
+
+<!-- SYSTEM PROPERTIES -->
+<div class="col-md-12 Properties_Content">
+<div class="panel panel-danger">
+<div class="panel-heading">System Properties</div>
+<table class="table small table-hover table-striped table-bordered">
+#foreach($entry in $systemProperties.entrySet())
+<tr>
+<th>${entry.key}</th>
+<td>${entry.value}</td>
+</tr>
+#end
+</table>
+</div>
+</div>
+
+
+<!-- ENVIRONMENT -->
+<div class="col-md-12 Properties_Content">
+<div class="panel panel-danger">
+<div class="panel-heading">Environment Properties</div>
+<table class="table small table-hover table-striped table-bordered">
+#foreach($entry in $envProperties.entrySet())
+<tr>
+<th>${entry.key}</th>
+<td>${entry.value}</td>
+</tr>
+#end
+</table>
+</div>
+</div>
+
+
+<!-- THREADS -->
+<div class="col-md-12 Thread_Content">
+<div class="panel panel-warning">
+<div class="panel-heading">Threads</div>
+<table class="table small table-hover table-striped table-bordered">
+#foreach($thread in $threads)
+<tr>
+<th rowspan="2">${thread.id}</th>
+<th>${thread.state}</th>
+<th>${thread.priority}</th>
+<th>${thread.name} #if($thread.daemon) (Daemon) #end</th>
+</tr>
+<tr>
+<td colspan="3">${thread.stackTrace}</td>
+</tr>
+#end
+</table>
+</div>
+</div>
+
+
+<!-- FILE SYSTEM -->
+<div class="col-md-12 FileSystem_Content">
+<div class="panel panel-success">
+<div class="panel-heading">File System</div>
+<table class="table small table-hover table-striped table-bordered">
+<tr>
+<th>&nbsp;</th>
+<th>Percent</th>
+<th>Used</th>
+<th>Limit</th>
+</tr>
+#foreach($fileRoot in $fileRoots)
+<tr>
+<th>${fileRoot.name}</th>
+<td>${fileRoot.percent}</td>
+<td>${fileRoot.used}</td>
+<td>${fileRoot.capacity}</td>
+</tr>
+#end
+</table>
+</div>
+</div>
+
+
+
+
+
+<!-- END ROW -->
+</div>
+
+<!-- END CONTAINER -->
+</div>
+
+
+<script>
+$(document).ready(function(){
+   	$(".Network_Content").hide();
+    $(".Properties_Content").hide();
+    $(".Thread_Content").hide();
+    $(".FileSystem_Content").hide();
+
+    $(".nav-pills a").click(function(){
+        $(this).tab('show');
+    });
+
+    $("#Memory_Tab").click(function(){
+       $(".Network_Content").hide();
+       $(".Properties_Content").hide();
+       $(".Thread_Content").hide();
+       $(".FileSystem_Content").hide();
+       $(".Memory_Content").show();
+    });
+    $("#Network_Tab").click(function(){
+       $(".Memory_Content").hide();
+       $(".Properties_Content").hide();
+       $(".Thread_Content").hide();
+       $(".FileSystem_Content").hide();
+       $(".Network_Content").show();
+    });
+    $("#Properties_Tab").click(function(){
+       $(".Memory_Content").hide();
+       $(".Network_Content").hide();
+       $(".Thread_Content").hide();
+       $(".FileSystem_Content").hide();
+       $(".Properties_Content").show();
+    });
+    $("#Thread_Tab").click(function(){
+       $(".Memory_Content").hide();
+       $(".Network_Content").hide();
+       $(".Properties_Content").hide();
+       $(".FileSystem_Content").hide();
+       $(".Thread_Content").show();
+    });
+    $("#FileSystem_Tab").click(function(){
+       $(".Memory_Content").hide();
+       $(".Network_Content").hide();
+       $(".Properties_Content").hide();
+       $(".Thread_Content").hide();
+       $(".FileSystem_Content").show();
+    });
+});
+</script>
+
+</body>
+</html>
