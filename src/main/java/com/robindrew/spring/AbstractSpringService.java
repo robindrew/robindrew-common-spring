@@ -16,7 +16,7 @@ import com.robindrew.spring.component.service.ServiceDefinition;
 
 @ComponentScan(basePackages = "com.robindrew.spring.component")
 @ServletComponentScan(basePackages = "com.robindrew.spring.servlet")
-public abstract class BaseSpringService {
+public abstract class AbstractSpringService {
 
 	@Autowired
 	private ServiceDefinition service;
@@ -28,6 +28,22 @@ public abstract class BaseSpringService {
 	@Qualifier("requestMappingHandlerMapping")
 	private RequestMappingHandlerMapping handlerMapping;
 
+	public ServiceDefinition getService() {
+		return service;
+	}
+
+	public ApplicationContext getContext() {
+		return context;
+	}
+
+	public ServletContext getServletContext() {
+		return servletContext;
+	}
+
+	public RequestMappingHandlerMapping getHandlerMapping() {
+		return handlerMapping;
+	}
+
 	@PostConstruct
 	public void registerContext() {
 		Spring.setContext(context);
@@ -37,7 +53,8 @@ public abstract class BaseSpringService {
 	public void applicationReady() {
 
 		// Log the beans registered
-		Spring.logBeans(context);
+		Spring.logBeans(context, "com.robindrew.spring.component");
+		Spring.logBeans(context, getClass().getPackage().getName());
 
 		// Log the servlets registered
 		Spring.logServlets(servletContext);

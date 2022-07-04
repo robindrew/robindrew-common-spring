@@ -1,5 +1,7 @@
 package com.robindrew.spring;
 
+import static java.util.Collections.emptySet;
+
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -42,14 +44,21 @@ public class Spring {
 		return getContext().getBean(type);
 	}
 
+	public static void logBeans(ApplicationContext context, String packageName) {
+		log.info("[Beans] Package: '{}'", packageName);
+
+		for (BeanName name : getBeanNames(context, packageName)) {
+			if (name.isTyped()) {
+				log.info("[Typed Bean] {}", name.getName());
+			} else {
+				log.info("[Named Bean] {} ({})", name.getName(), name.getType());
+			}
+		}
+	}
+
 	public static void logBeans(ApplicationContext context) {
 		if (log.isDebugEnabled()) {
-			Set<BeanName> names = new TreeSet<>();
-			for (String name : context.getBeanDefinitionNames()) {
-				Object bean = context.getBean(name);
-				names.add(new BeanName(name, bean));
-			}
-			for (BeanName name : names) {
+			for (BeanName name : getBeanNames(context, null)) {
 				if (name.isTyped()) {
 					log.debug("[Typed Bean] {}", name.getName());
 				} else {
@@ -59,6 +68,17 @@ public class Spring {
 		}
 
 		log.info("[Application Context] {} beans registered", context.getBeanDefinitionCount());
+	}
+
+	private static Set<BeanName> getBeanNames(ApplicationContext context, String packageName) {
+		Set<BeanName> names = new TreeSet<>();
+		for (String name : context.getBeanDefinitionNames()) {
+			Object bean = context.getBean(name);
+			if (packageName == null || bean.getClass().getPackage().getName().startsWith(packageName)) {
+				names.add(new BeanName(name, bean));
+			}
+		}
+		return names;
 	}
 
 	public static void logEndpoints(RequestMappingHandlerMapping mapping) {
