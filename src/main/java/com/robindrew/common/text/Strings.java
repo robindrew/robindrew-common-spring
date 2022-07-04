@@ -6,10 +6,12 @@ import static java.lang.Character.isUpperCase;
 import static java.lang.Character.toLowerCase;
 import static java.lang.Character.toUpperCase;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
@@ -21,6 +23,12 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.Indenter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
 import com.robindrew.common.base.Java;
@@ -525,4 +533,48 @@ public class Strings {
 		return array;
 	}
 
+	public static String json(Object value, boolean prettyPrinting) {
+		ObjectMapper mapper = new ObjectMapper();
+
+		final ObjectWriter writer;
+		if (prettyPrinting) {
+			DefaultPrettyPrinter printer = new DefaultPrettyPrinter();
+			printer.indentArraysWith(new JsonArrayIndenter());
+			writer = mapper.writer(printer);
+		} else {
+			writer = mapper.writer();
+		}
+
+		try {
+			return writer.writeValueAsString(value);
+		} catch (JsonProcessingException e) {
+			throw Java.propagate(e);
+		}
+	}
+
+	private static class JsonArrayIndenter implements Indenter, java.io.Serializable {
+
+		static final String SYSTEM_LINE_SEPARATOR = Java.getLineSeparator();
+		static final int SPACE_COUNT = 256;
+		static final char[] SPACES = new char[SPACE_COUNT];
+		static {
+			Arrays.fill(SPACES, ' ');
+		}
+
+		@Override
+		public boolean isInline() {
+			return false;
+		}
+
+		@Override
+		public void writeIndentation(JsonGenerator json, int level) throws IOException {
+			json.writeRaw(SYSTEM_LINE_SEPARATOR);
+			level += level; // 2 spaces per level
+			while (level > SPACE_COUNT) { // should never happen but...
+				json.writeRaw(SPACES, 0, SPACE_COUNT);
+				level -= SPACES.length;
+			}
+			json.writeRaw(SPACES, 0, level);
+		}
+	}
 }

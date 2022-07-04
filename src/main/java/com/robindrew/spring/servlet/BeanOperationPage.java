@@ -60,10 +60,9 @@ public class BeanOperationPage extends AbstractTemplateServlet {
 			return;
 		}
 
-		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		// String json = gson.toJson(value);
-		// dataMap.put("valueType", "Json");
-		// dataMap.put("value", json);
+		String json = Strings.json(value, true);
+		dataMap.put("valueType", "Json");
+		dataMap.put("value", json);
 	}
 
 	private Object[] getParameters(IBeanOperation operation, IHttpRequest request) {

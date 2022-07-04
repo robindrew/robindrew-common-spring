@@ -12,6 +12,7 @@ import com.robindrew.common.http.servlet.template.TemplateResource;
 import com.robindrew.common.mbean.model.BeanServer;
 import com.robindrew.common.mbean.model.IBean;
 import com.robindrew.common.mbean.model.IBeanAttribute;
+import com.robindrew.common.text.Strings;
 import com.robindrew.spring.servlet.bean.BeanAttributeView;
 
 @WebServlet(urlPatterns = "/GetBeanAttribute")
@@ -42,9 +43,8 @@ public class GetBeanAttributePage extends AbstractTemplateServlet {
 			return;
 		}
 
-		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		// String json = gson.toJson(value);
-		// dataMap.put("valueType", "Json");
-		// dataMap.put("value", json);
+		String json = Strings.json(value, true);
+		dataMap.put("valueType", "Json");
+		dataMap.put("value", json);
 	}
 }
