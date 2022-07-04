@@ -1,126 +1,69 @@
 package com.robindrew.common.http;
 
-import com.robindrew.common.base.Preconditions;
-
 public class MimeType {
 
-	public static final MimeType TEXT_PLAIN = new MimeType("text/plain", true);
-	public static final MimeType TEXT_HTML = new MimeType("text/html", true);
-	public static final MimeType TEXT_CSS = new MimeType("text/css", true);
-	public static final MimeType TEXT_XML = new MimeType("text/xml", true);
-	public static final MimeType TEXT_CSV = new MimeType("text/csv", true);
-	public static final MimeType TEXT_RTF = new MimeType("text/rtf", true);
+	public static final String TEXT_PLAIN = "text/plain";
+	public static final String TEXT_HTML = "text/html";
+	public static final String TEXT_CSS = "text/css";
+	public static final String TEXT_XML = "text/xml";
+	public static final String TEXT_CSV = "text/csv";
+	public static final String TEXT_RTF = "text/rtf";
 
-	public static final MimeType IMAGE_ICON = new MimeType("image/x-icon", false);
-	public static final MimeType IMAGE_JPEG = new MimeType("image/jpeg", false);
-	public static final MimeType IMAGE_PNG = new MimeType("image/png", false);
-	public static final MimeType IMAGE_GIF = new MimeType("image/gif", false);
+	public static final String IMAGE_ICON = "image/x-icon";
+	public static final String IMAGE_JPEG = "image/jpeg";
+	public static final String IMAGE_PNG = "image/png";
+	public static final String IMAGE_GIF = "image/gif";
 
-	public static final MimeType VIDEO_MPEG = new MimeType("video/mpeg", false);
-	public static final MimeType VIDEO_MP4 = new MimeType("video/mp4", false);
+	public static final String VIDEO_MPEG = "video/mpeg";
+	public static final String VIDEO_MP4 = "video/mp4";
 
-	public static final MimeType FONT_OTF = new MimeType("font/otf", false);
+	public static final String FONT_OTF = "font/otf";
 
-	public static final MimeType APPLICATION_JSON = new MimeType("application/json", true);
-	public static final MimeType APPLICATION_JAVASCRIPT = new MimeType("application/javascript", true);
+	public static final String APPLICATION_JSON = "application/json";
+	public static final String APPLICATION_JAVASCRIPT = "application/javascript";
 
-	public static MimeType withName(String name) {
-		int dotIndex = name.lastIndexOf('.');
-		if (dotIndex == -1) {
-			dotIndex = 0;
+	public static String forExtension(String extension) {
+		int dotIndex = extension.lastIndexOf('.');
+		if (dotIndex != -1) {
+			extension = extension.substring(dotIndex + 1);
 		}
-		String extension = name.substring(dotIndex + 1);
-		return withExtension(extension);
-	}
-
-	public static MimeType withExtension(String extension) {
 		extension = extension.toLowerCase();
 
-		// Text types
-		if (extension.equals("txt")) {
-			return TEXT_PLAIN;
-		}
-		if (extension.equals("html") || extension.endsWith("htm")) {
-			return TEXT_HTML;
-		}
-		if (extension.equals("xml")) {
-			return TEXT_XML;
-		}
-		if (extension.equals("css")) {
-			return TEXT_CSS;
-		}
-		if (extension.equals("csv")) {
-			return TEXT_CSV;
-		}
-		if (extension.equals("rtf")) {
-			return TEXT_RTF;
-		}
-
-		// Application types
-		if (extension.equals("json")) {
-			return APPLICATION_JSON;
-		}
-		if (extension.equals("js") || extension.equals("javascript")) {
-			return APPLICATION_JAVASCRIPT;
-		}
-
-		// Image types
-		if (extension.equals("ico")) {
-			return IMAGE_ICON;
-		}
-		if (extension.equals("jpg")) {
-			return IMAGE_JPEG;
-		}
-		if (extension.equals("png")) {
-			return IMAGE_PNG;
-		}
-		if (extension.equals("gif")) {
-			return IMAGE_GIF;
+		switch (extension) {
+			case "txt":
+				return TEXT_PLAIN;
+			case "html":
+			case "htm":
+				return TEXT_HTML;
+			case "css":
+				return TEXT_CSS;
+			case "xml":
+				return TEXT_XML;
+			case "csv":
+				return TEXT_CSV;
+			case "rtf":
+				return TEXT_RTF;
+			case "ico":
+				return IMAGE_ICON;
+			case "jpeg":
+			case "jpg":
+				return IMAGE_JPEG;
+			case "png":
+				return IMAGE_PNG;
+			case "mpeg":
+				return VIDEO_MPEG;
+			case "mp4":
+				return VIDEO_MP4;
+			case "otf":
+				return FONT_OTF;
+			case "json":
+				return APPLICATION_JSON;
+			case "js":
+				return APPLICATION_JAVASCRIPT;
+			default:
+				throw new IllegalArgumentException("Extension not mapped: " + extension);
 		}
 
-		// Font types
-		if (extension.equals("otf")) {
-			return FONT_OTF;
-		}
-
-		// Video types
-		if (extension.equals("mpg")) {
-			return VIDEO_MPEG;
-		}
-		if (extension.equals("mpeg")) {
-			return VIDEO_MPEG;
-		}
-		if (extension.equals("mp4")) {
-			return VIDEO_MP4;
-		}
-
-		// Unknown
-		throw new IllegalArgumentException("Unknown extension: '" + extension + "'");
-	}
-
-	private final String type;
-	private final boolean text;
-
-	public MimeType(String type, boolean text) {
-		this.type = Preconditions.notEmpty("type", type);
-		this.text = text;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public boolean isText() {
-		return text;
-	}
-
-	public boolean isBinary() {
-		return !text;
-	}
-
-	@Override
-	public String toString() {
-		return type;
 	}
 
 }

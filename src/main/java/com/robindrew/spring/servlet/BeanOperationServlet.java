@@ -21,7 +21,7 @@ import com.robindrew.spring.servlet.bean.BeanOperationView;
 
 @WebServlet(urlPatterns = "/BeanOperation")
 @TemplateResource("site/BeanOperation.html")
-public class BeanOperationPage extends AbstractTemplateServlet {
+public class BeanOperationServlet extends AbstractTemplateServlet {
 
 	@Override
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {

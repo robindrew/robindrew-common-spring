@@ -12,7 +12,7 @@ import com.robindrew.common.mbean.model.BeanServer;
 
 @WebServlet(urlPatterns = "/BeanConsole")
 @TemplateResource("site/BeanConsole.html")
-public class BeanConsolePage extends AbstractTemplateServlet {
+public class BeanConsoleServlet extends AbstractTemplateServlet {
 
 	@Override
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {

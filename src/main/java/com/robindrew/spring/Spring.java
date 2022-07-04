@@ -38,6 +38,10 @@ public class Spring {
 		Spring.context = context;
 	}
 
+	public static <T> T getBean(Class<T> type) {
+		return getContext().getBean(type);
+	}
+
 	public static void logBeans(ApplicationContext context) {
 		if (log.isDebugEnabled()) {
 			Set<BeanName> names = new TreeSet<>();
@@ -113,4 +117,5 @@ public class Spring {
 		}
 
 	}
+
 }

@@ -12,13 +12,12 @@ import com.robindrew.common.http.servlet.template.TemplateResource;
 import com.robindrew.common.mbean.model.BeanServer;
 import com.robindrew.common.mbean.model.IBean;
 import com.robindrew.common.mbean.model.IBeanAttribute;
-import com.robindrew.common.text.parser.IStringParser;
-import com.robindrew.common.text.parser.StringParserMap;
+import com.robindrew.common.text.Strings;
 import com.robindrew.spring.servlet.bean.BeanAttributeView;
 
-@WebServlet(urlPatterns = "/SetBeanAttribute")
-@TemplateResource("site/SetBeanAttribute.html")
-public class SetBeanAttributePage extends AbstractTemplateServlet {
+@WebServlet(urlPatterns = "/GetBeanAttribute")
+@TemplateResource("site/GetBeanAttribute.html")
+public class GetBeanAttributeServlet extends AbstractTemplateServlet {
 
 	@Override
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {
@@ -28,16 +27,12 @@ public class SetBeanAttributePage extends AbstractTemplateServlet {
 		String type = request.getString("type");
 		String name = request.getString("name");
 		String attributeName = request.getString("attribute");
-		String newValue = request.getString("value");
 
 		BeanServer server = new BeanServer();
 		IBean bean = server.getBean(domain, type, name);
 		IBeanAttribute attribute = bean.getAttribute(attributeName);
 
-		Object value = parseValue(newValue, attribute);
-		attribute.setValue(value);
-
-		value = attribute.getValue();
+		Object value = attribute.getValue();
 		dataMap.put("bean", bean);
 		dataMap.put("attribute", new BeanAttributeView(attribute));
 
@@ -48,16 +43,8 @@ public class SetBeanAttributePage extends AbstractTemplateServlet {
 			return;
 		}
 
-		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		// String json = gson.toJson(value);
-		// dataMap.put("valueType", "Json");
-		// dataMap.put("value", json);
-	}
-
-	private Object parseValue(String value, IBeanAttribute attribute) {
-		Class<?> type = attribute.getType();
-		StringParserMap map = new StringParserMap();
-		IStringParser<?> parser = map.getParser(type);
-		return parser.parse(value);
+		String json = Strings.json(value, true);
+		dataMap.put("valueType", "Json");
+		dataMap.put("value", json);
 	}
 }
