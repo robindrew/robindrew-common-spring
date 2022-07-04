@@ -1,4 +1,4 @@
-package com.robindrew.spring.stats;
+package com.robindrew.spring.component.stats;
 
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 

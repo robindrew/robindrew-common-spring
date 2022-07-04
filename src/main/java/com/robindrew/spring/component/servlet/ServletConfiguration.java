@@ -1,4 +1,4 @@
-package com.robindrew.spring.template;
+package com.robindrew.spring.component.servlet;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

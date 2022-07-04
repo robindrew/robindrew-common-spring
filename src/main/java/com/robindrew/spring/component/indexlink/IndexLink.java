@@ -1,4 +1,4 @@
-package com.robindrew.spring.servlet.index;
+package com.robindrew.spring.component.indexlink;
 
 import static com.robindrew.common.base.Preconditions.notEmpty;
 

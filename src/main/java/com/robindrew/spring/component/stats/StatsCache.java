@@ -1,4 +1,4 @@
-package com.robindrew.spring.stats;
+package com.robindrew.spring.component.stats;
 
 import java.util.Collections;
 import java.util.Deque;
@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.ImmutableSet;
@@ -14,19 +15,9 @@ import com.google.common.collect.ImmutableSet;
 @Component
 public class StatsCache implements IStatsCache {
 
-	private final int capacity;
+	@Value("${stats.cache.capacity:8}")
+	private int capacity;
 	private final Map<String, Deque<IStatsInstant>> cache = new LinkedHashMap<>();
-
-	public StatsCache() {
-		this.capacity = 8;
-	}
-
-	public StatsCache(int capacity) {
-		if (capacity < 1) {
-			throw new IllegalArgumentException("capacity=" + capacity);
-		}
-		this.capacity = capacity;
-	}
 
 	@Override
 	public Set<String> getKeys() {

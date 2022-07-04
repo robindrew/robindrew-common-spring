@@ -16,7 +16,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.robindrew.spring.service.ServiceDefinition;
+import com.robindrew.spring.component.service.ServiceDefinition;
 
 public class Spring {
 
@@ -79,9 +79,11 @@ public class Spring {
 
 	public static void logServlets(ServletContext context) {
 		Map<String, ? extends ServletRegistration> servletMap = context.getServletRegistrations();
+		Map<String, String> logMap = new TreeMap<>();
 		for (ServletRegistration servlet : servletMap.values()) {
-			log.info("[HTTP Servlet] {} -> {}", servlet.getMappings(), servlet.getName());
+			logMap.put(servlet.getMappings().toString(), servlet.getName());
 		}
+		logMap.forEach((key, value) -> log.info("[HTTP Servlet] {} -> {}", key, value));
 	}
 
 	static class BeanName implements Comparable<BeanName> {

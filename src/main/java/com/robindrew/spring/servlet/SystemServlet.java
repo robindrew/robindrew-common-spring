@@ -1,9 +1,9 @@
 package com.robindrew.spring.servlet;
 
-import static com.robindrew.spring.stats.StatsComponent.JAVA_HEAP_FREE;
-import static com.robindrew.spring.stats.StatsComponent.JAVA_HEAP_USED;
-import static com.robindrew.spring.stats.StatsComponent.SYSTEM_MEMORY_FREE;
-import static com.robindrew.spring.stats.StatsComponent.SYSTEM_MEMORY_USED;
+import static com.robindrew.spring.component.stats.StatsComponent.JAVA_HEAP_FREE;
+import static com.robindrew.spring.component.stats.StatsComponent.JAVA_HEAP_USED;
+import static com.robindrew.spring.component.stats.StatsComponent.SYSTEM_MEMORY_FREE;
+import static com.robindrew.spring.component.stats.StatsComponent.SYSTEM_MEMORY_USED;
 
 import java.lang.management.BufferPoolMXBean;
 import java.lang.management.ManagementFactory;
@@ -34,13 +34,13 @@ import com.robindrew.common.http.servlet.request.IHttpRequest;
 import com.robindrew.common.http.servlet.template.AbstractTemplateServlet;
 import com.robindrew.common.http.servlet.template.TemplateResource;
 import com.robindrew.common.text.Strings;
-import com.robindrew.spring.service.ServiceDefinition;
+import com.robindrew.spring.component.service.ServiceDefinition;
+import com.robindrew.spring.component.stats.IStatsCache;
+import com.robindrew.spring.component.stats.StatsInstantSet;
 import com.robindrew.spring.servlet.system.FileRootView;
 import com.robindrew.spring.servlet.system.MemoryStats;
 import com.robindrew.spring.servlet.system.NetworkInterfaceView;
 import com.robindrew.spring.servlet.system.ThreadView;
-import com.robindrew.spring.stats.IStatsCache;
-import com.robindrew.spring.stats.StatsInstantSet;
 
 @WebServlet(urlPatterns = "/System")
 @TemplateResource("site/System.html")

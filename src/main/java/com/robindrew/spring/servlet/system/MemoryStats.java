@@ -4,8 +4,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import com.robindrew.common.text.Strings;
-import com.robindrew.spring.stats.IStatsInstant;
-import com.robindrew.spring.stats.StatsInstantSet;
+import com.robindrew.spring.component.stats.IStatsInstant;
+import com.robindrew.spring.component.stats.StatsInstantSet;
 
 public class MemoryStats {
 

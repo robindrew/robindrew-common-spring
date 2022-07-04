@@ -1,4 +1,4 @@
-package com.robindrew.spring.stats;
+package com.robindrew.spring.component.stats;
 
 import com.robindrew.common.base.Preconditions;
 import com.robindrew.common.text.Strings;

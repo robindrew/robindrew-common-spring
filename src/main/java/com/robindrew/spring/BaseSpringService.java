@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.robindrew.spring.service.ServiceDefinition;
+import com.robindrew.spring.component.service.ServiceDefinition;
 
+@ComponentScan(basePackages = "com.robindrew.spring.component")
 @ServletComponentScan(basePackages = "com.robindrew.spring.servlet")
-public abstract class AbstractSpringService {
+public abstract class BaseSpringService {
 
 	@Autowired
 	private ServiceDefinition service;

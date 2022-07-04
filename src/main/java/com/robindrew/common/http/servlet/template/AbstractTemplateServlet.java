@@ -16,7 +16,7 @@ import com.robindrew.common.template.ITemplate;
 import com.robindrew.common.template.ITemplateLocator;
 import com.robindrew.common.template.TemplateData;
 import com.robindrew.common.text.Strings;
-import com.robindrew.spring.service.ServiceDefinition;
+import com.robindrew.spring.component.service.ServiceDefinition;
 
 public abstract class AbstractTemplateServlet extends AbstractBaseServlet {
 

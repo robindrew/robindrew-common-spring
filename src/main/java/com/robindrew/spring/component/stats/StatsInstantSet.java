@@ -1,4 +1,4 @@
-package com.robindrew.spring.stats;
+package com.robindrew.spring.component.stats;
 
 import java.util.Map;
 import java.util.Set;

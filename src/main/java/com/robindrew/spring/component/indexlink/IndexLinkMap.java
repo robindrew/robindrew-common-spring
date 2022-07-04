@@ -1,4 +1,4 @@
-package com.robindrew.spring.servlet.index;
+package com.robindrew.spring.component.indexlink;
 
 import java.util.ArrayList;
 import java.util.Iterator;
