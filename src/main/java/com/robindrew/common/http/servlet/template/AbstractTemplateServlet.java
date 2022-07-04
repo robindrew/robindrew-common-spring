@@ -1,21 +1,16 @@
 package com.robindrew.common.http.servlet.template;
 
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Stopwatch;
 import com.robindrew.common.base.Java;
-import com.robindrew.common.http.response.HttpResponse;
 import com.robindrew.common.http.response.IHttpResponse;
-import com.robindrew.common.http.servlet.request.HttpRequest;
+import com.robindrew.common.http.servlet.AbstractBaseServlet;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
 import com.robindrew.common.template.ITemplate;
 import com.robindrew.common.template.ITemplateLocator;
@@ -23,7 +18,7 @@ import com.robindrew.common.template.TemplateData;
 import com.robindrew.common.text.Strings;
 import com.robindrew.spring.service.ServiceDefinition;
 
-public abstract class AbstractTemplateServlet extends HttpServlet {
+public abstract class AbstractTemplateServlet extends AbstractBaseServlet {
 
 	public static final String META_RENDER_TIMER = "META_RENDER_TIMER";
 	public static final String META_EXECUTE_TIMER = "META_EXECUTE_TIMER";
@@ -49,12 +44,7 @@ public abstract class AbstractTemplateServlet extends HttpServlet {
 		return resource[0];
 	}
 
-	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		execute(new HttpRequest(request), new HttpResponse(response));
-	}
-
-	private void execute(IHttpRequest request, IHttpResponse response) {
+	protected void execute(IHttpRequest request, IHttpResponse response) {
 		Stopwatch renderTimer = Stopwatch.createStarted();
 
 		// Find the template
