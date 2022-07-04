@@ -13,8 +13,8 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
 import javax.imageio.stream.ImageOutputStream;
 
-import com.robindrew.common.util.Java;
-import com.robindrew.common.util.Quietly;
+import com.robindrew.common.base.Java;
+import com.robindrew.common.base.Quietly;
 
 public class ImageOutput implements IImageOutput {
 

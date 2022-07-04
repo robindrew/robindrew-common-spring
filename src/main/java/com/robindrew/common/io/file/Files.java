@@ -1,4 +1,4 @@
-package com.robindrew.common.io;
+package com.robindrew.common.io.file;
 
 import static com.google.common.base.Charsets.UTF_8;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -39,6 +39,7 @@ import com.google.common.io.PatternFilenameFilter;
 import com.robindrew.common.base.Java;
 import com.robindrew.common.base.SystemProperties;
 import com.robindrew.common.base.Threads;
+import com.robindrew.common.io.PatternFileFilter;
 
 public class Files {
 

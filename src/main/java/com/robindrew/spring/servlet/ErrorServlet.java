@@ -8,8 +8,7 @@ import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.assertj.core.util.Throwables;
-
+import com.google.common.base.Throwables;
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
 import com.robindrew.common.http.servlet.template.AbstractTemplateServlet;
@@ -37,7 +36,7 @@ public class ErrorServlet extends AbstractTemplateServlet {
 
 		Throwable cause = (Throwable) request.getAttribute(ERROR_EXCEPTION);
 		if (cause != null) {
-			dataMap.put("errorException", Throwables.getStackTrace(cause));
+			dataMap.put("errorException", Throwables.getStackTraceAsString(cause));
 		}
 	}
 

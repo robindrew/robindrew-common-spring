@@ -1,5 +1,6 @@
 package com.robindrew.common.base;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 
@@ -40,5 +41,57 @@ public class Preconditions {
 			throw new IllegalArgumentException(variableName + " is empty");
 		}
 		return map;
+	}
+
+	public static File exists(String name, File value) {
+		notNull(name, value);
+		if (!value.exists()) {
+			throw new IllegalArgumentException("'" + name + "' does not exist: '" + value.getAbsolutePath() + "'");
+		}
+		return value;
+	}
+
+	public static File directory(String name, File value) {
+		notNull(name, value);
+		if (!value.isDirectory()) {
+			throw new IllegalArgumentException("'" + name + "' is not a directory: '" + value + "'");
+		}
+		return value;
+	}
+
+	public static File file(String name, File value) {
+		notNull(name, value);
+		if (!value.isFile()) {
+			throw new IllegalArgumentException("'" + name + "' is not a regular file: '" + value + "'");
+		}
+		return value;
+	}
+
+	public static File directory(String name, String value) {
+		return directory(name, new File(value));
+	}
+
+	public static File file(String name, String value) {
+		return file(name, new File(value));
+	}
+
+	public static File existsDirectory(String name, File value) {
+		exists(name, value);
+		directory(name, value);
+		return value;
+	}
+
+	public static File existsFile(String name, File value) {
+		exists(name, value);
+		file(name, value);
+		return value;
+	}
+
+	public static File existsDirectory(String name, String value) {
+		return existsDirectory(name, new File(value));
+	}
+
+	public static File existsFile(String name, String value) {
+		return existsFile(name, new File(value));
 	}
 }
