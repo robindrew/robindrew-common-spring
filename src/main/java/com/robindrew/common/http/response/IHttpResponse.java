@@ -3,7 +3,6 @@ package com.robindrew.common.http.response;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.io.ByteSource;
-import com.robindrew.common.http.ContentType;
 
 public interface IHttpResponse extends HttpServletResponse {
 
@@ -13,11 +12,11 @@ public interface IHttpResponse extends HttpServletResponse {
 
 	void internalServerError(String text);
 
-	void ok(ContentType contentType, String text);
+	void ok(String contentType, String text);
 
-	void ok(ContentType contentType, ByteSource source);
+	void ok(String contentType, ByteSource source);
 
-	void ok(ContentType contentType);
+	void ok(String contentType);
 
 	void setCookie(String key, String value);
 

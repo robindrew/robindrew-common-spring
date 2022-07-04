@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import com.google.common.io.ByteSource;
-import com.robindrew.common.http.ContentType;
 import com.robindrew.common.http.servlet.Servlets;
 
 public class HttpResponse extends HttpServletResponseWrapper implements IHttpResponse {
@@ -34,17 +33,17 @@ public class HttpResponse extends HttpServletResponseWrapper implements IHttpRes
 	}
 
 	@Override
-	public void ok(ContentType contentType) {
+	public void ok(String contentType) {
 		Servlets.ok(getResponse(), contentType);
 	}
 
 	@Override
-	public void ok(ContentType contentType, String text) {
+	public void ok(String contentType, String text) {
 		Servlets.ok(getResponse(), text, contentType);
 	}
 
 	@Override
-	public void ok(ContentType contentType, ByteSource source) {
+	public void ok(String contentType, ByteSource source) {
 		Servlets.ok(getResponse(), source, contentType);
 	}
 

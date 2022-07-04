@@ -12,6 +12,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" ></script>
 <script src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="/css/common.css">
 
 <!-- Google Charts -->
 <script>
@@ -107,19 +108,6 @@ function drawSystemMemoryAreaChart() {
 	chart.draw(data, options);
 }
 </script>
-
-<style>
-body {
-	padding-top: 10px;
-}
-.top-spacer {
-	padding-top: 10px;
-}
-.pointer {
-	cursor: pointer;
-}
-</style>
-
 
 </head>
 
@@ -344,7 +332,10 @@ ${address}<br/>
 
 
 
-
+<div class="col-md-12 footer-row">
+<hr/>
+<p>Page executed in ${META_EXECUTE_TIMER}, rendered in ${META_RENDER_TIMER}
+</div>
 
 <!-- END ROW -->
 </div>

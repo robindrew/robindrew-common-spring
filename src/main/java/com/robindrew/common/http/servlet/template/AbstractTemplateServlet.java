@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Stopwatch;
 import com.robindrew.common.base.Java;
-import com.robindrew.common.base.Strings;
-import com.robindrew.common.http.ContentType;
 import com.robindrew.common.http.response.HttpResponse;
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.request.HttpRequest;
@@ -22,6 +20,7 @@ import com.robindrew.common.http.servlet.request.IHttpRequest;
 import com.robindrew.common.template.ITemplate;
 import com.robindrew.common.template.ITemplateLocator;
 import com.robindrew.common.template.TemplateData;
+import com.robindrew.common.text.Strings;
 import com.robindrew.spring.service.ServiceDefinition;
 
 public abstract class AbstractTemplateServlet extends HttpServlet {
@@ -34,10 +33,20 @@ public abstract class AbstractTemplateServlet extends HttpServlet {
 	@Autowired
 	private ServiceDefinition service;
 
-	public abstract String getTemplateName();
+	protected String getTemplateName() {
+		return getTemplateResource().value();
+	}
 
-	public ContentType getContentType() {
-		return ContentType.TEXT_HTML;
+	protected String getContentType() {
+		return getTemplateResource().contentType();
+	}
+
+	private TemplateResource getTemplateResource() {
+		TemplateResource[] resource = getClass().getAnnotationsByType(TemplateResource.class);
+		if (resource == null || resource.length == 0) {
+			throw new IllegalStateException("Required @TemplateResource annotation not found for " + getClass());
+		}
+		return resource[0];
 	}
 
 	@Override
@@ -56,7 +65,7 @@ public abstract class AbstractTemplateServlet extends HttpServlet {
 		Stopwatch executeTimer = Stopwatch.createStarted();
 		execute(request, response, dataMap);
 		executeTimer.stop();
-		
+
 		// Found (Redirect)?
 		if (response.getStatus() == HttpServletResponse.SC_FOUND) {
 			return;

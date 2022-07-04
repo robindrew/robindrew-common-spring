@@ -3,7 +3,7 @@ package com.robindrew.spring.servlet.system;
 import java.io.File;
 import java.nio.file.Path;
 
-import com.robindrew.common.base.Strings;
+import com.robindrew.common.text.Strings;
 
 public class FileRootView implements Comparable<FileRootView> {
 

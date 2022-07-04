@@ -1,6 +1,7 @@
 package com.robindrew.spring.stats;
 
-import java.util.concurrent.Executors;
+import static java.util.concurrent.Executors.newScheduledThreadPool;
+
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
@@ -35,7 +36,7 @@ public class StatsComponent extends SafeRunnable {
 
 	@PostConstruct
 	private void schedule() {
-		Executors.newScheduledThreadPool(1).scheduleAtFixedRate(this, 0, period, unit);
+		newScheduledThreadPool(1).scheduleAtFixedRate(this, 0, period, unit);
 	}
 
 	public void loggedRun() {

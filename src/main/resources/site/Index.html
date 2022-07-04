@@ -7,12 +7,7 @@
 <!-- CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-
-<style>
-body { padding-top: 10px; }
-.top-spacer {padding-top: 10px; }]
-</style>
-
+<link rel="stylesheet" href="/css/common.css">
 
 </head>
 
@@ -81,10 +76,15 @@ body { padding-top: 10px; }
 </table>
 </div>
 
+
 <div class="col-md-12">
-#foreach($entry in $linkMap.entrySet())
-<button id="Button_${entry.value.htmlName}" type="button" class="btn btn-${entry.value.color}">${entry.value.displayName}</button>&nbsp;&nbsp;
+#foreach($link in $linkMap)
+<button id="Button_${link.htmlName}" type="button" class="btn btn-${link.color}">${link.displayName}</button>&nbsp;&nbsp;
 #end
+</div>
+
+<div class="col-md-12 footer-row">
+<hr/><p>Page executed in ${META_EXECUTE_TIMER}, rendered in ${META_RENDER_TIMER}
 </div>
 
 <!-- END ROW -->
@@ -99,8 +99,8 @@ body { padding-top: 10px; }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" ></script>
 <script>
-#foreach($entry in $linkMap.entrySet())
-$("#Button_${entry.value.htmlName}").click(function() { window.location.href = "${entry.value.url}"; });
+#foreach($link in $linkMap)
+$("#Button_${link.htmlName}").click(function() { window.location.href = "${link.url}"; });
 #end
 </script>
 </body>

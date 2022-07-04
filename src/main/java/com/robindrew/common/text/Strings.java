@@ -1,4 +1,4 @@
-package com.robindrew.common.base;
+package com.robindrew.common.text;
 
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLetter;
@@ -23,6 +23,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Throwables;
+import com.robindrew.common.base.Java;
+import com.robindrew.common.base.Numbers;
 import com.robindrew.common.date.Dates;
 import com.robindrew.common.date.duration.DurationMillis;
 

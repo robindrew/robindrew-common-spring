@@ -1,0 +1,11 @@
+body {
+	padding-top: 10px;
+	font-family: arial;
+}
+.top-spacer {
+	padding-top: 10px;
+}
+.footer-row {
+	font-size: 8pt;
+	color: #ccc;
+}

@@ -28,11 +28,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.robindrew.common.base.Java;
-import com.robindrew.common.base.Strings;
 import com.robindrew.common.base.SystemProperties;
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
 import com.robindrew.common.http.servlet.template.AbstractTemplateServlet;
+import com.robindrew.common.http.servlet.template.TemplateResource;
+import com.robindrew.common.text.Strings;
 import com.robindrew.spring.service.ServiceDefinition;
 import com.robindrew.spring.servlet.system.FileRootView;
 import com.robindrew.spring.servlet.system.MemoryStats;
@@ -41,7 +42,8 @@ import com.robindrew.spring.servlet.system.ThreadView;
 import com.robindrew.spring.stats.IStatsCache;
 import com.robindrew.spring.stats.StatsInstantSet;
 
-@WebServlet(urlPatterns = "/system")
+@WebServlet(urlPatterns = "/System")
+@TemplateResource("site/System.html")
 public class SystemServlet extends AbstractTemplateServlet {
 
 	private static final Logger log = LoggerFactory.getLogger(SystemServlet.class);
@@ -50,11 +52,6 @@ public class SystemServlet extends AbstractTemplateServlet {
 	private ServiceDefinition service;
 	@Autowired
 	private IStatsCache statsCache;
-
-	@Override
-	public String getTemplateName() {
-		return "site/System.html";
-	}
 
 	@Override
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {

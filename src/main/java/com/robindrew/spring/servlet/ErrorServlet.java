@@ -13,17 +13,14 @@ import org.assertj.core.util.Throwables;
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
 import com.robindrew.common.http.servlet.template.AbstractTemplateServlet;
+import com.robindrew.common.http.servlet.template.TemplateResource;;
 
 /**
  * The error page.
  */
 @WebServlet(urlPatterns = "/error")
+@TemplateResource("site/Error.html")
 public class ErrorServlet extends AbstractTemplateServlet {
-
-	@Override
-	public String getTemplateName() {
-		return "site/Error.html";
-	}
 
 	@Override
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {
@@ -32,12 +29,6 @@ public class ErrorServlet extends AbstractTemplateServlet {
 		// Check the status of the error
 		Integer status = (Integer) request.getAttribute(ERROR_STATUS_CODE);
 		String uri = (String) request.getAttribute(ERROR_REQUEST_URI);
-
-		// Home page redirect (redirects from "/" to "/index")
-		if (status == 404 && uri.equals("/")) {
-			response.found("/index");
-			return;
-		}
 
 		dataMap.put("request", request);
 		dataMap.put("errorPage", "true");

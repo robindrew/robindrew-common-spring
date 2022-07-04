@@ -1,7 +1,7 @@
 package com.robindrew.spring.stats;
 
 import com.robindrew.common.base.Preconditions;
-import com.robindrew.common.base.Strings;
+import com.robindrew.common.text.Strings;
 
 public class StatsInstant implements IStatsInstant {
 

@@ -1,8 +1,9 @@
 package com.robindrew.common.http.servlet;
 
-import static com.robindrew.common.http.ContentType.TEXT_HTML;
+import static com.robindrew.common.http.ContentType.TEXT_HTML_UTF8;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
@@ -19,6 +20,16 @@ import com.robindrew.common.http.servlet.header.HttpHeader;
  * The servlets utility.
  */
 public class Servlets {
+
+	private static volatile Charset defaultCharset = Charsets.UTF_8;
+
+	public static Charset getDefaultCharset() {
+		return defaultCharset;
+	}
+
+	public static void setDefaultCharset(Charset charset) {
+		defaultCharset = Preconditions.notNull("charset", charset);
+	}
 
 	/**
 	 * HTTP Response: 401 / Unauthorized (authenticate)
@@ -62,7 +73,7 @@ public class Servlets {
 	 */
 	public static final void notFound(HttpServletResponse response, String path) {
 		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-		setContent(response, "<h1>Error 404</h1><code>Not Found: \"" + path + "\"</code>", TEXT_HTML);
+		setContent(response, "<h1>Error 404</h1><code>Not Found: \"" + path + "\"</code>", TEXT_HTML_UTF8);
 	}
 
 	/**
@@ -70,13 +81,13 @@ public class Servlets {
 	 */
 	public static final void internalServerError(HttpServletResponse response, String text) {
 		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		setContent(response, text, ContentType.TEXT_PLAIN);
+		setContent(response, text, ContentType.TEXT_PLAIN_UTF8);
 	}
 
 	/**
 	 * HTTP Response: 200 / OK
 	 */
-	public static final void ok(HttpServletResponse response, String text, ContentType contentType) {
+	public static final void ok(HttpServletResponse response, String text, String contentType) {
 		response.setStatus(HttpServletResponse.SC_OK);
 		setContent(response, text, contentType);
 	}
@@ -84,35 +95,48 @@ public class Servlets {
 	/**
 	 * HTTP Response: 200 / OK
 	 */
-	public static final void ok(HttpServletResponse response, ContentType contentType) {
+	public static final void ok(HttpServletResponse response, String contentType) {
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.setContentType(contentType.toString());
+		response.setContentType(contentType);
 	}
 
 	/**
 	 * HTTP Response: 200 / OK
 	 */
-	public static final void ok(HttpServletResponse response, ByteSource source, ContentType contentType) {
+	public static final void ok(HttpServletResponse response, ByteSource source, String contentType) {
 		response.setStatus(HttpServletResponse.SC_OK);
 		setContent(response, source, contentType);
 	}
 
-	public static void setContent(HttpServletResponse response, String text, ContentType contentType) {
-		byte[] bytes = text.getBytes(Charsets.UTF_8);
+	public static void setContent(HttpServletResponse response, String text, String contentType) {
+		Charset charset = parseCharset(contentType);
+		byte[] bytes = text.getBytes(charset);
 		setContent(response, bytes, contentType);
 	}
 
-	public static void setContent(HttpServletResponse response, byte[] bytes, ContentType contentType) {
+	private static Charset parseCharset(String contentType) {
+		if (contentType.endsWith("UTF-8")) {
+			return Charsets.UTF_8;
+		}
+		int index = contentType.indexOf("charset=");
+		if (index == -1) {
+			return defaultCharset;
+		}
+		index += "charset=".length();
+		return Charset.forName(contentType.substring(index));
+	}
+
+	public static void setContent(HttpServletResponse response, byte[] bytes, String contentType) {
 		Preconditions.notNull("contentType", contentType);
 
-		response.setContentType(contentType.toString());
+		response.setContentType(contentType);
 		writeContent(response, bytes);
 	}
 
-	public static void setContent(HttpServletResponse response, ByteSource source, ContentType contentType) {
+	public static void setContent(HttpServletResponse response, ByteSource source, String contentType) {
 		Preconditions.notNull("contentType", contentType);
 
-		response.setContentType(contentType.toString());
+		response.setContentType(contentType);
 		writeContent(response, source);
 	}
 
