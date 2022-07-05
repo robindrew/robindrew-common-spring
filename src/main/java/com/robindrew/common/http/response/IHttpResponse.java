@@ -14,6 +14,8 @@ public interface IHttpResponse extends HttpServletResponse {
 
 	void ok(String contentType, String text);
 
+	void ok(String contentType, CharSequence text);
+
 	void ok(String contentType, ByteSource source);
 
 	void ok(String contentType);

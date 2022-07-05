@@ -43,6 +43,11 @@ public class HttpResponse extends HttpServletResponseWrapper implements IHttpRes
 	}
 
 	@Override
+	public void ok(String contentType, CharSequence text) {
+		Servlets.ok(getResponse(), text.toString(), contentType);
+	}
+
+	@Override
 	public void ok(String contentType, ByteSource source) {
 		Servlets.ok(getResponse(), source, contentType);
 	}
