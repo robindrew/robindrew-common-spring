@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
-import com.robindrew.common.http.servlet.template.AbstractTemplateServlet;
-import com.robindrew.common.http.servlet.template.TemplateResource;
 import com.robindrew.common.web.Bootstrap;
 import com.robindrew.spring.component.indexlink.IndexLinkMap;
+import com.robindrew.spring.component.servlet.template.AbstractTemplateServlet;
+import com.robindrew.spring.component.servlet.template.TemplateResource;
 
 /**
  * The index servlet handles the default url as well (designated by the url pattern empty string: "")

@@ -1,4 +1,4 @@
-package com.robindrew.common.http.servlet.template;
+package com.robindrew.spring.component.servlet.template;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

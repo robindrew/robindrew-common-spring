@@ -8,8 +8,6 @@ import javax.servlet.annotation.WebServlet;
 
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
-import com.robindrew.common.http.servlet.template.AbstractTemplateServlet;
-import com.robindrew.common.http.servlet.template.TemplateResource;
 import com.robindrew.common.mbean.model.BeanServer;
 import com.robindrew.common.mbean.model.IBean;
 import com.robindrew.common.mbean.model.IBeanOperation;
@@ -17,6 +15,8 @@ import com.robindrew.common.mbean.model.IBeanParameter;
 import com.robindrew.common.text.Strings;
 import com.robindrew.common.text.parser.IStringParser;
 import com.robindrew.common.text.parser.StringParserMap;
+import com.robindrew.spring.component.servlet.template.AbstractTemplateServlet;
+import com.robindrew.spring.component.servlet.template.TemplateResource;
 import com.robindrew.spring.servlet.bean.BeanOperationView;
 
 @WebServlet(urlPatterns = "/BeanOperation")

@@ -11,8 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import com.google.common.base.Throwables;
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
-import com.robindrew.common.http.servlet.template.AbstractTemplateServlet;
-import com.robindrew.common.http.servlet.template.TemplateResource;;
+import com.robindrew.spring.component.servlet.template.AbstractTemplateServlet;
+import com.robindrew.spring.component.servlet.template.TemplateResource;;
 
 /**
  * The error page.

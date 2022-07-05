@@ -14,8 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import com.robindrew.spring.component.service.ServiceDefinition;
 
-@ComponentScan(basePackages = "com.robindrew.spring.component")
-@ServletComponentScan(basePackages = "com.robindrew.spring.servlet")
+@ComponentScan(basePackages = "com.robindrew.spring")
+@ServletComponentScan(basePackages = "com.robindrew.spring")
 public abstract class AbstractSpringService {
 
 	@Autowired

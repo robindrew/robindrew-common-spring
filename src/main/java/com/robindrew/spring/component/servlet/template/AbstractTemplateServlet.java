@@ -1,4 +1,4 @@
-package com.robindrew.common.http.servlet.template;
+package com.robindrew.spring.component.servlet.template;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -8,15 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Stopwatch;
-import com.robindrew.common.base.Java;
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.AbstractBaseServlet;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
 import com.robindrew.common.template.ITemplate;
 import com.robindrew.common.template.ITemplateLocator;
 import com.robindrew.common.template.TemplateData;
-import com.robindrew.common.text.Strings;
-import com.robindrew.spring.component.service.ServiceDefinition;
 
 public abstract class AbstractTemplateServlet extends AbstractBaseServlet {
 
@@ -26,7 +23,7 @@ public abstract class AbstractTemplateServlet extends AbstractBaseServlet {
 	@Autowired
 	private ITemplateLocator locator;
 	@Autowired
-	private ServiceDefinition service;
+	private VelocityDataMapper mapper;
 
 	protected String getTemplateName() {
 		return getTemplateResource().value();
@@ -71,25 +68,7 @@ public abstract class AbstractTemplateServlet extends AbstractBaseServlet {
 	}
 
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {
-
-		dataMap.put("title", service.getName() + " #" + service.getInstance());
-
-		dataMap.put("serviceName", service.getName());
-		dataMap.put("serviceInstance", service.getInstance());
-		dataMap.put("serviceEnv", service.getEnv());
-		dataMap.put("servicePort", service.getPort());
-
-		dataMap.put("systemHost", Java.getHostName());
-		dataMap.put("systemAddress", Java.getHostAddress());
-		dataMap.put("systemTime", Strings.date(Java.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss"));
-
-		dataMap.put("processId", Java.getProcessId());
-
-		dataMap.put("javaStartTime", Strings.date(Java.getStartTime(), "yyyy-MM-dd HH:mm:ss"));
-		dataMap.put("javaUptime", Strings.time(Java.getUptime()));
-		dataMap.put("javaMaxMemory", Strings.bytes(Java.maxMemory()));
-		dataMap.put("javaUsedMemory", Strings.bytes(Java.usedMemory()));
-		dataMap.put("javaPercentMemory", Strings.percent(Java.usedMemory(), Java.maxMemory()));
+		mapper.populate(dataMap);
 	}
 
 }
