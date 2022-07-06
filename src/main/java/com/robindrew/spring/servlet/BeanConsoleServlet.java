@@ -11,7 +11,7 @@ import com.robindrew.spring.component.servlet.template.AbstractTemplateServlet;
 import com.robindrew.spring.component.servlet.template.TemplateResource;
 
 @WebServlet(urlPatterns = "/BeanConsole")
-@TemplateResource("site/BeanConsole.html")
+@TemplateResource("templates/service/BeanConsole.html")
 public class BeanConsoleServlet extends AbstractTemplateServlet {
 
 	@Override

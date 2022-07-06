@@ -18,7 +18,7 @@ import com.robindrew.spring.component.servlet.template.TemplateResource;;
  * The error page.
  */
 @WebServlet(urlPatterns = "/error")
-@TemplateResource("site/Error.html")
+@TemplateResource("templates/service/Error.html")
 public class ErrorServlet extends AbstractTemplateServlet {
 
 	@Override

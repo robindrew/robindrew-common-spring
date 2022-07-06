@@ -14,7 +14,7 @@ import com.robindrew.spring.servlet.bean.BeanAttributeView;
 import com.robindrew.spring.servlet.bean.BeanOperationView;
 
 @WebServlet(urlPatterns = "/BeanView")
-@TemplateResource("site/BeanView.html")
+@TemplateResource("templates/service/BeanView.html")
 public class BeanViewServlet extends AbstractTemplateServlet {
 
 	@Override

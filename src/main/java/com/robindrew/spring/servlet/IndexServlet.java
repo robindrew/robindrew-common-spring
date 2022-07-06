@@ -18,7 +18,7 @@ import com.robindrew.spring.component.servlet.template.TemplateResource;
  * The index servlet handles the default url as well (designated by the url pattern empty string: "")
  */
 @WebServlet(urlPatterns = { "/Index", "" })
-@TemplateResource("site/Index.html")
+@TemplateResource("templates/service/Index.html")
 public class IndexServlet extends AbstractTemplateServlet {
 
 	@Autowired

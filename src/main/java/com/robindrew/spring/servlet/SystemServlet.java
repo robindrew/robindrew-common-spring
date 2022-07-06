@@ -43,7 +43,7 @@ import com.robindrew.spring.servlet.system.NetworkInterfaceView;
 import com.robindrew.spring.servlet.system.ThreadView;
 
 @WebServlet(urlPatterns = "/System")
-@TemplateResource("site/System.html")
+@TemplateResource("templates/service/System.html")
 public class SystemServlet extends AbstractTemplateServlet {
 
 	private static final Logger log = LoggerFactory.getLogger(SystemServlet.class);

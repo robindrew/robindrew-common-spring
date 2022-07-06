@@ -17,7 +17,7 @@ import com.robindrew.spring.component.servlet.template.TemplateResource;
 import com.robindrew.spring.servlet.bean.BeanAttributeView;
 
 @WebServlet(urlPatterns = "/SetBeanAttribute")
-@TemplateResource("site/SetBeanAttribute.html")
+@TemplateResource("templates/service/SetBeanAttribute.html")
 public class SetBeanAttributeServlet extends AbstractTemplateServlet {
 
 	@Override
