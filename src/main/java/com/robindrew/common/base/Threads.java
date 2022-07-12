@@ -127,6 +127,16 @@ public class Threads {
 	 * @param threadNameFormat the name format for all pooled threads.
 	 * @param threadCount the number of threads.
 	 */
+	public static ExecutorService newCachedThreadPool(String threadNameFormat) {
+		ThreadFactory factory = newThreadFactory(threadNameFormat, true);
+		return Executors.newCachedThreadPool(factory);
+	}
+
+	/**
+	 * Creates a new fixed thread pool.
+	 * @param threadNameFormat the name format for all pooled threads.
+	 * @param threadCount the number of threads.
+	 */
 	public static ExecutorService newFixedThreadPool(String threadNameFormat, int threadCount) {
 		ThreadFactory factory = newThreadFactory(threadNameFormat, true);
 		return Executors.newFixedThreadPool(threadCount, factory);

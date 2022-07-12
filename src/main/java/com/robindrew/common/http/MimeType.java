@@ -48,6 +48,8 @@ public class MimeType {
 			case "jpeg":
 			case "jpg":
 				return IMAGE_JPEG;
+			case "gif":
+				return IMAGE_GIF;
 			case "png":
 				return IMAGE_PNG;
 			case "mpeg":

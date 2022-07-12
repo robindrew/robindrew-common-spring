@@ -28,6 +28,7 @@ public class IndexServlet extends AbstractTemplateServlet {
 	private void setLinks() {
 		linkMap.add("MBeans", "/BeanConsole", Bootstrap.COLOR_PRIMARY);
 		linkMap.add("System", "/System", Bootstrap.COLOR_PRIMARY);
+		linkMap.add("REST", "/swagger-ui/index.html", Bootstrap.COLOR_PRIMARY);
 	}
 	
 	@Override
