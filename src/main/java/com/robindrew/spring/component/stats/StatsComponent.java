@@ -2,12 +2,16 @@ package com.robindrew.spring.component.stats;
 
 import static java.util.concurrent.Executors.newScheduledThreadPool;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jmx.export.annotation.ManagedAttribute;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 
 import com.robindrew.common.base.Java;
@@ -17,6 +21,7 @@ import com.robindrew.common.base.SafeRunnable;
  * The stats component.
  */
 @Component
+@ManagedResource(objectName = "service.spring.bean:type=StatsComponent")
 public class StatsComponent extends SafeRunnable {
 
 	public static final String JAVA_HEAP_MAX = "javaHeapMax";
@@ -37,6 +42,16 @@ public class StatsComponent extends SafeRunnable {
 	@PostConstruct
 	private void schedule() {
 		newScheduledThreadPool(1).scheduleAtFixedRate(this, 0, period, unit);
+	}
+
+	@ManagedAttribute
+	public Set<String> getKeys() {
+		return cache.getKeys();
+	}
+
+	@ManagedOperation
+	public Set<IStatsInstant> getStats(String key) {
+		return cache.getStats(key);
 	}
 
 	public void loggedRun() {

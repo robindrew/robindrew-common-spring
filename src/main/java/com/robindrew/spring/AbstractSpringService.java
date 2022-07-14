@@ -1,6 +1,9 @@
 package com.robindrew.spring;
 
+import java.lang.management.ManagementFactory;
+
 import javax.annotation.PostConstruct;
+import javax.management.MBeanServer;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +11,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.context.event.EventListener;
+import org.springframework.jmx.export.MBeanExporter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.robindrew.spring.component.service.ServiceDefinition;
 
+@EnableMBeanExport
 @ComponentScan(basePackages = "com.robindrew.spring.component")
 @ServletComponentScan(basePackages = "com.robindrew.spring.servlet")
 public abstract class AbstractSpringService {
@@ -27,6 +34,20 @@ public abstract class AbstractSpringService {
 	@Autowired
 	@Qualifier("requestMappingHandlerMapping")
 	private RequestMappingHandlerMapping handlerMapping;
+
+	@Bean
+	public MBeanServer getMBeanServer() {
+		return ManagementFactory.getPlatformMBeanServer();
+	}
+
+	@Bean
+	public MBeanExporter getMBeanExporter() {
+		MBeanExporter exporter = new MBeanExporter();
+		exporter.setServer(getMBeanServer());
+		exporter.setAutodetect(true);
+		exporter.setAutodetectMode(MBeanExporter.AUTODETECT_ALL);
+		return exporter;
+	}
 
 	public ServiceDefinition getService() {
 		return service;
