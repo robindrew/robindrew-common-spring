@@ -9,5 +9,4 @@ public class TestWebService extends AbstractSpringService {
 	public static void main(String[] args) {
 		SpringApplication.run(TestWebService.class, args);
 	}
-
 }

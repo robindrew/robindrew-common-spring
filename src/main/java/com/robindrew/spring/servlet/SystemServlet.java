@@ -25,7 +25,6 @@ import javax.servlet.annotation.WebServlet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.robindrew.common.base.Java;
 import com.robindrew.common.base.SystemProperties;
@@ -48,10 +47,13 @@ public class SystemServlet extends AbstractTemplateServlet {
 
 	private static final Logger log = LoggerFactory.getLogger(SystemServlet.class);
 
-	@Autowired
-	private ServiceDefinition service;
-	@Autowired
-	private IStatsCache statsCache;
+	private final ServiceDefinition service;
+	private final IStatsCache statsCache;
+
+	public SystemServlet(ServiceDefinition service, IStatsCache statsCache) {
+		this.service = service;
+		this.statsCache = statsCache;
+	}
 
 	@Override
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {

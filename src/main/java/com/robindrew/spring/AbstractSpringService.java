@@ -74,8 +74,7 @@ public abstract class AbstractSpringService {
 	public void applicationReady() {
 
 		// Log the beans registered
-		Spring.logBeans(context, "com.robindrew.spring.component");
-		Spring.logBeans(context, getClass().getPackage().getName());
+		Spring.logBeans(context, "com.robindrew.spring.component", getClass().getPackage().getName() + ".component");
 
 		// Log the servlets registered
 		Spring.logServlets(servletContext);

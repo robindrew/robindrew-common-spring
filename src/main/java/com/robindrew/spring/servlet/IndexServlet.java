@@ -5,8 +5,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.servlet.annotation.WebServlet;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
 import com.robindrew.common.web.Bootstrap;
@@ -21,8 +19,11 @@ import com.robindrew.spring.component.servlet.template.TemplateResource;
 @TemplateResource("templates/service/Index.html")
 public class IndexServlet extends AbstractTemplateServlet {
 
-	@Autowired
-	private IndexLinkMap linkMap;
+	private final IndexLinkMap linkMap;
+
+	public IndexServlet(IndexLinkMap linkMap) {
+		this.linkMap = linkMap;
+	}
 
 	@PostConstruct
 	private void setLinks() {
@@ -30,7 +31,7 @@ public class IndexServlet extends AbstractTemplateServlet {
 		linkMap.add("System", "/System", Bootstrap.COLOR_PRIMARY);
 		linkMap.add("REST", "/swagger-ui/index.html", Bootstrap.COLOR_PRIMARY);
 	}
-	
+
 	@Override
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {
 		super.execute(request, response, dataMap);

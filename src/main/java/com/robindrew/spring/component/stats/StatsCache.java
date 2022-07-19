@@ -16,7 +16,7 @@ import com.google.common.collect.ImmutableSet;
 public class StatsCache implements IStatsCache {
 
 	@Value("${stats.cache.capacity:8}")
-	private int capacity;
+	private int capacity = 8;
 	private final Map<String, Deque<IStatsInstant>> cache = new LinkedHashMap<>();
 
 	@Override

@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
@@ -17,14 +16,18 @@ import com.robindrew.common.template.ITemplateLocator;
 public class VelocityViewResolver extends AbstractCachingViewResolver implements Ordered {
 
 	@Value("${velocity.template.prefix:templates/}")
-	private String prefix;
+	private String prefix = "templates/";
 	@Value("${velocity.template.postfix:.html}")
-	private String postfix;
+	private String postfix = ".html";
 	@Value("${velocity.view.resolver.order:0}")
-	private int order;
-	@Autowired
-	private ITemplateLocator locator;
-	private final Map<String, VelocityView> viewMap = new LinkedHashMap<>();
+	private int order = 0;
+	private final ITemplateLocator locator;
+	private final Map<String, VelocityView> viewMap;
+
+	public VelocityViewResolver(ITemplateLocator locator) {
+		this.locator = locator;
+		this.viewMap = new LinkedHashMap<>();
+	}
 
 	@Override
 	public int getOrder() {

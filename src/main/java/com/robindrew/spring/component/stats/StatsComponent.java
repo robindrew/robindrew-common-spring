@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
@@ -32,12 +31,16 @@ public class StatsComponent extends SafeRunnable {
 	public static final String SYSTEM_MEMORY_USED = "systemMemoryUsed";
 	public static final String SYSTEM_MEMORY_FREE = "systemMemoryFree";
 
-	@Value("${stats.component.frequency.period}")
-	private long period;
-	@Value("${stats.component.frequency.unit}")
-	private TimeUnit unit;
-	@Autowired
-	private IStatsCache cache;
+	@Value("${stats.component.frequency.period:1}")
+	private long period = 1;
+	@Value("${stats.component.frequency.unit:MINUTES}")
+	private TimeUnit unit = TimeUnit.MINUTES;
+
+	private final IStatsCache cache;
+
+	public StatsComponent(IStatsCache cache) {
+		this.cache = cache;
+	}
 
 	@PostConstruct
 	private void schedule() {
