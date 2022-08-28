@@ -1,5 +1,7 @@
 package com.robindrew.spring;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -9,7 +11,6 @@ import java.util.TreeSet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
-import org.assertj.core.util.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -44,7 +45,7 @@ public class Spring {
 	}
 
 	public static void logBeans(ApplicationContext context, String... packageNames) {
-		Set<String> set = Sets.newLinkedHashSet(packageNames);
+		Set<String> set = new LinkedHashSet<>(Arrays.asList(packageNames));
 		logBeans(context, set);
 	}
 

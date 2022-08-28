@@ -18,6 +18,9 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+tasks.withType(Copy) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
 
 // SOURCE FILES (What are our source directories)
 sourceSets {
@@ -57,18 +60,21 @@ configurations.implementation {
     exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
 }
 
+
 // DEPENDENCIES (Which JAR files to download and host locally)
 dependencies {
 
 	implementation 'com.google.guava:guava:20.0'
 	implementation 'org.apache.velocity:velocity-engine-core:2.3'
 
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 	implementation 'org.springdoc:springdoc-openapi-webmvc-core:1.6.9'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.7.1'
 	implementation 'org.springframework.boot:spring-boot-starter-jetty:2.7.1'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.7.1'
 
+	testImplementation 'junit:junit:4.13.2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.1'
 
 }
