@@ -1,5 +1,6 @@
 package com.robindrew.spring;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -18,6 +19,9 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.robindrew.common.base.Java;
+import com.robindrew.common.date.Dates;
+import com.robindrew.common.text.Strings;
 import com.robindrew.spring.component.service.ServiceDefinition;
 
 public class Spring {
@@ -110,10 +114,23 @@ public class Spring {
 	}
 
 	public static void logService(ServiceDefinition service) {
+		log.info("[{}] Started:  {}", service.getName(), getStartTime());
+		log.info("[{}] Process:  {}", service.getName(), Java.getProcessId());
+		log.info("[{}] Memory:   {}", service.getName(), getMemory());
 		log.info("[{}] Profiles: {}", service.getName(), service.getProfiles());
 		log.info("[{}] Env:      {}", service.getName(), service.getEnv());
 		log.info("[{}] Port:     {}", service.getName(), service.getPort());
 		log.info("[{}] Instance: {}", service.getName(), service.getInstance());
+	}
+
+	private static String getMemory() {
+		long max = Java.maxMemory();
+		return Strings.bytes(max);
+	}
+
+	private static String getStartTime() {
+		long time = Java.getStartTime();
+		return Dates.formatDate("yyyy-MM-dd HH:mm:ss,S", time);
 	}
 
 	public static void logServlets(ServletContext context) {
