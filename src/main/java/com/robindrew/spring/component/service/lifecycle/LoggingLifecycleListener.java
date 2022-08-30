@@ -22,7 +22,7 @@ public class LoggingLifecycleListener implements IServiceLifecycleListener {
 		if (startupTimer.isRunning()) {
 			startupTimer.stop();
 		}
-		log.info("[{}] Startup:  {}", service.getName(), startupTimer);
+		log.info("[{}] Service started in {}", service.getName(), startupTimer);
 	}
 
 }
