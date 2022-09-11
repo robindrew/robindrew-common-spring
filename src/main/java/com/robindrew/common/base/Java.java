@@ -131,10 +131,10 @@ public class Java {
 	 * Returns the process id of this JVM process.
 	 * @return the process id of this JVM process.
 	 */
-	public static long getProcessId() {
+	public static int getProcessId() {
 		String name = ManagementFactory.getRuntimeMXBean().getName();
 		int index = name.indexOf('@');
-		return Long.parseLong(name.substring(0, index));
+		return Integer.parseInt(name.substring(0, index));
 	}
 
 	/**
