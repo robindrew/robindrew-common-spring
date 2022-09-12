@@ -14,7 +14,7 @@ import oshi.software.os.OSProcess;
 public class OshiTest {
 
 	@Test
-	public void testOshiSystemManager() {
+	public void testOshiBasics() {
 		Oshi oshi = new Oshi();
 
 		// Startup
