@@ -22,7 +22,7 @@ public class ProcessMonitor extends AbstractStatusMonitor {
 	private volatile ThresholdSet<Double> cpuThresholds = new ThresholdSet<>();
 
 	public ProcessMonitor() {
-		super(40, SECONDS);
+		super(30, SECONDS);
 
 		// Heap monitoring thresholds
 		heapThresholds.add(new PercentThreshold(60, WARN, 20, SECONDS));

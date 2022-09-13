@@ -17,7 +17,7 @@ public class StatusMonitorComponent {
 	
 	public StatusMonitorComponent() {
 		register(new ProcessMonitor());
-		register(new SystemMonitor().withMount("C:\\"));
+		register(new SystemMonitor("C:\\"));
 	}
 
 	public void register(IStatusMonitor monitor) {

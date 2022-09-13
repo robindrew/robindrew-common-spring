@@ -7,11 +7,11 @@ import static org.slf4j.event.Level.WARN;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Sets;
 import com.robindrew.common.base.Oshi;
 import com.robindrew.spring.component.status.metric.MetricSet;
 import com.robindrew.spring.component.status.metric.SystemCpu;
@@ -24,14 +24,12 @@ public class SystemMonitor extends AbstractStatusMonitor {
 
 	private static final Logger log = LoggerFactory.getLogger(SystemMonitor.class);
 
-	private final Set<String> mounts = new CopyOnWriteArraySet<>();
-
 	private final MetricSet set;
 	private volatile ThresholdSet<Double> memoryThresholds = new ThresholdSet<>();
 	private volatile ThresholdSet<Double> cpuThresholds = new ThresholdSet<>();
 	private volatile ThresholdSet<Double> diskThresholds = new ThresholdSet<>();
 
-	public SystemMonitor() {
+	public SystemMonitor(String... mounts) {
 		super(1, MINUTES);
 
 		memoryThresholds.add(new PercentThreshold(90, WARN, 30, SECONDS));
@@ -44,13 +42,14 @@ public class SystemMonitor extends AbstractStatusMonitor {
 		set = new MetricSet("[System]");
 		set.add(new SystemMemory(oshi, memoryThresholds));
 		set.add(new SystemCpu(oshi, cpuThresholds));
-		set.addAll(getSystemDisks(oshi, diskThresholds));
+		set.addAll(getSystemDisks(oshi, diskThresholds, mounts));
 	}
 
-	private List<SystemDisk> getSystemDisks(Oshi oshi, ThresholdSet<Double> thresholds) {
+	private List<SystemDisk> getSystemDisks(Oshi oshi, ThresholdSet<Double> thresholds, String[] mounts) {
+		Set<String> mountSet = Sets.newHashSet(mounts);
 		List<SystemDisk> list = new ArrayList<>();
 		for (OSFileStore store : oshi.getFileStores(true)) {
-			if (!mounts.contains(store.getMount())) {
+			if (!mountSet.contains(store.getMount())) {
 				continue;
 			}
 			if (store.getUsableSpace() == 0) {
@@ -59,14 +58,6 @@ public class SystemMonitor extends AbstractStatusMonitor {
 			list.add(new SystemDisk(store, thresholds));
 		}
 		return list;
-	}
-
-	public SystemMonitor withMount(String mount) {
-		if (!mount.endsWith(":\\")) {
-			throw new IllegalArgumentException("Invalid mount: '" + mount + "'");
-		}
-		this.mounts.add(mount);
-		return this;
 	}
 
 	@Override

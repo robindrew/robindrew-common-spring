@@ -18,7 +18,7 @@ public class SystemDisk extends AbstractPercentMetric {
 		String mount = store.getMount();
 		int index = mount.lastIndexOf(":\\");
 		if (index != -1) {
-			mount = "Drive(" + mount.substring(0, index) + "):";
+			mount = "Drive(" + mount.substring(0, index) + ")";
 		}
 		this.mount = mount;
 	}
