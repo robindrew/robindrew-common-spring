@@ -17,7 +17,7 @@ public class PercentThreshold extends Threshold<Double> {
 	}
 
 	public boolean matches(Double value) {
-		return value >= percent;
+		return !Double.isNaN(value) && value >= percent;
 	}
 
 }

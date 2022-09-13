@@ -20,10 +20,6 @@ public class Oshi {
 		return systemInfo;
 	}
 
-	public List<OSFileStore> getLocalFilestores(boolean local) {
-		return getSystemInfo().getOperatingSystem().getFileSystem().getFileStores(local);
-	}
-
 	public CentralProcessor getProcessor() {
 		return getSystemInfo().getHardware().getProcessor();
 	}
