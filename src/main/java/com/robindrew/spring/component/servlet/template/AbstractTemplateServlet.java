@@ -5,9 +5,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.assertj.core.util.Throwables;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Stopwatch;
+import com.robindrew.common.base.Java;
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.AbstractBaseServlet;
 import com.robindrew.common.http.servlet.request.IHttpRequest;
@@ -16,6 +20,8 @@ import com.robindrew.common.template.ITemplateLocator;
 import com.robindrew.common.template.TemplateData;
 
 public abstract class AbstractTemplateServlet extends AbstractBaseServlet {
+
+	private static final Logger log = LoggerFactory.getLogger(AbstractTemplateServlet.class);
 
 	public static final String META_RENDER_TIMER = "META_RENDER_TIMER";
 	public static final String META_EXECUTE_TIMER = "META_EXECUTE_TIMER";
@@ -64,7 +70,16 @@ public abstract class AbstractTemplateServlet extends AbstractBaseServlet {
 
 		// Execute the template
 		String text = template.execute(new TemplateData(dataMap));
-		response.ok(getContentType(), text);
+		try {
+			response.ok(getContentType(), text);
+		} catch (Exception e) {
+			Throwable root = Throwables.getRootCause(e);
+			if (root.getMessage() != null && root.getMessage().contains("connection was aborted")) {
+				log.debug("Connection closed during write");
+			} else {
+				throw Java.propagate(e);
+			}
+		}
 	}
 
 	protected void execute(IHttpRequest request, IHttpResponse response, Map<String, Object> dataMap) {
