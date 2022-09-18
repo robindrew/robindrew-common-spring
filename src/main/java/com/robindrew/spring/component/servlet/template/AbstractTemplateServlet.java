@@ -5,12 +5,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.assertj.core.util.Throwables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Stopwatch;
+import com.google.common.base.Throwables;
 import com.robindrew.common.base.Java;
 import com.robindrew.common.http.response.IHttpResponse;
 import com.robindrew.common.http.servlet.AbstractBaseServlet;
