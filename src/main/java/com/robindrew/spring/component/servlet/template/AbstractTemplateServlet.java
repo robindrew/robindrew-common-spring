@@ -47,6 +47,7 @@ public abstract class AbstractTemplateServlet extends AbstractBaseServlet {
 		return resource[0];
 	}
 
+	@Override
 	protected void execute(IHttpRequest request, IHttpResponse response) {
 		Stopwatch renderTimer = Stopwatch.createStarted();
 

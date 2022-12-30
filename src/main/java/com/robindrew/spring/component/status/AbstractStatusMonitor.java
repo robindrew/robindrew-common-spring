@@ -25,6 +25,7 @@ public abstract class AbstractStatusMonitor extends SafeRunnable implements ISta
 		return this;
 	}
 
+	@Override
 	public Threshold<?> getThreshold() {
 		return threshold;
 	}

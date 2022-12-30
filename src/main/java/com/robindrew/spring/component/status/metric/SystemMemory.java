@@ -22,6 +22,7 @@ public class SystemMemory extends AbstractPercentMetric {
 		set(memory.getTotal(), memory.getAvailable());
 	}
 
+	@Override
 	public StringBuilder appendTo(StringBuilder line) {
 		return appendTo(line, "Memory");
 	}

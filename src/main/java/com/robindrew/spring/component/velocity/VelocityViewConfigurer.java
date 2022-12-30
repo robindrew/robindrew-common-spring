@@ -15,6 +15,7 @@ public class VelocityViewConfigurer implements WebMvcConfigurer {
 		this.resolver = resolver;
 	}
 
+	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		registry.viewResolver(resolver);
 	}

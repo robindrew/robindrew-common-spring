@@ -68,6 +68,7 @@ public class Threshold<V> {
 		return level1.ordinal() < level2.ordinal() ? level1 : level2;
 	}
 
+	@Override
 	public boolean equals(Object object) {
 		if (object instanceof Threshold) {
 			Threshold<?> that = (Threshold<?>) object;
