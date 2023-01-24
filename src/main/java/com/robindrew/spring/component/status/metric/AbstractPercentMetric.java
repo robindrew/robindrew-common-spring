@@ -31,6 +31,7 @@ public abstract class AbstractPercentMetric implements IMetric {
 		return (getUsed() / getTotal()) * 100.0;
 	}
 
+	@Override
 	public boolean isValid() {
 		return free != MIN_VALUE && total != MIN_VALUE;
 	}

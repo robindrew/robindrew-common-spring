@@ -19,6 +19,7 @@ public class ProcessHeap extends AbstractPercentMetric {
 		set(maxMemory(), freeMemory());
 	}
 
+	@Override
 	public StringBuilder appendTo(StringBuilder line) {
 		return appendTo(line, "Heap");
 	}

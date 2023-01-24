@@ -16,6 +16,7 @@ public class PercentThreshold extends Threshold<Double> {
 		this.percent = percent;
 	}
 
+	@Override
 	public boolean matches(Double value) {
 		return !Double.isNaN(value) && value >= percent;
 	}

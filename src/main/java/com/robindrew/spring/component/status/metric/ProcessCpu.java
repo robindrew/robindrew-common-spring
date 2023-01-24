@@ -34,6 +34,7 @@ public class ProcessCpu implements IMetric {
 		return thresholds.merge(percent, threshold);
 	}
 
+	@Override
 	public void update() {
 		OSProcess latest = oshi.getProcess();
 		if (previous != null) {

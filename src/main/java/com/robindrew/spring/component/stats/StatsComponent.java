@@ -57,6 +57,7 @@ public class StatsComponent extends SafeRunnable {
 		return cache.getStats(key);
 	}
 
+	@Override
 	public void loggedRun() {
 		long timestamp = (System.currentTimeMillis() / 1000) * 1000;
 

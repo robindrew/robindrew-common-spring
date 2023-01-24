@@ -27,6 +27,7 @@ public class SystemCpu implements IMetric {
 		return !Double.isNaN(percent);
 	}
 
+	@Override
 	public void update() {
 		long[] latest = oshi.getProcessor().getSystemCpuLoadTicks();
 		if (previous != null) {

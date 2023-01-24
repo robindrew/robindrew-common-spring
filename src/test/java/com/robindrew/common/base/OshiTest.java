@@ -5,9 +5,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.robindrew.common.base.Java;
-import com.robindrew.common.base.Oshi;
-
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OSProcess;
 
