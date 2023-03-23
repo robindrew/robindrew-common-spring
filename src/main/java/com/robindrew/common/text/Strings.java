@@ -35,6 +35,7 @@ import com.robindrew.common.base.Java;
 import com.robindrew.common.base.Numbers;
 import com.robindrew.common.date.Dates;
 import com.robindrew.common.date.duration.DurationMillis;
+import com.robindrew.common.encrypt.Sha256Hash;
 
 /**
  * A utility that brings together common text processing functionality.
@@ -57,7 +58,11 @@ public class Strings {
 	 */
 	private Strings() {
 	}
-
+ 
+	public static String sha256(byte[] bytes) {
+		return new Sha256Hash().hashToString(bytes);
+	}
+	
 	public static String number(Collection<?> collection) {
 		return number(collection.size());
 	}
